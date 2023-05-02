@@ -18,6 +18,6 @@ class Workout (
     @Column
     val dateCreation: Date,
 
-    @Column
-    val exercises: List<Exercise>? = null
+    @OneToMany
+    val exercises: MutableList<Exercise>? = null
 )
