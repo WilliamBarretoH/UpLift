@@ -1,5 +1,6 @@
 package com.lift.up.domain.entity
 
+import com.lift.up.api.dto.ExerciseDto
 import javax.persistence.*
 
 @Entity
@@ -20,6 +21,7 @@ class Exercise(
     val name: String,
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     val category: Category,
 
     @Column
@@ -28,3 +30,8 @@ class Exercise(
     @Column
     val reps: Float? = null
 )
+    fun Exercise.toExerciseDto() = ExerciseDto(
+            exerciseId = this.id,
+            name = this.name,
+            categoryName = this.category.name
+    )

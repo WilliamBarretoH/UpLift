@@ -1,7 +1,9 @@
 package com.lift.up.service
 
+import com.lift.up.api.dto.WorkoutCreateDto
 import com.lift.up.api.dto.WorkoutDto
 import com.lift.up.domain.entity.Workout
+import com.lift.up.domain.entity.toWorkoutDto
 import com.lift.up.domain.repository.ExerciseRepository
 import com.lift.up.domain.repository.WorkoutRepository
 import org.springframework.stereotype.Service
@@ -14,14 +16,17 @@ class WorkoutService(
     private val exerciseRepository: ExerciseRepository
 ) {
 
-    fun listAll() = workoutRepository.findAll().toList()
+    fun listAll(): List<WorkoutDto> {
+        val workouts = workoutRepository.findAll()
+        return workouts.map { it.toWorkoutDto() }
+    }
 
-    fun createWorkout(workoutDto: WorkoutDto) {
-        val exercises = workoutDto.exercisesDto.stream().map {
-            exerciseRepository.findById(it.exerciseId).orElseThrow()
+    fun createWorkout(workoutCreateDto: WorkoutCreateDto) {
+        val exercises = workoutCreateDto.exercises.stream().map {
+            exerciseRepository.findById(it).orElseThrow()
         }.collect(Collectors.toList())
         val workout = Workout(
-            name = workoutDto.name,
+            name = workoutCreateDto.name,
             dateCreation = Date(),
             exercises = exercises)
         workoutRepository.save(workout)

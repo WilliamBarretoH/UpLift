@@ -1,6 +1,6 @@
 package com.lift.up.domain.entity
 
-import lombok.Data
+import com.lift.up.api.dto.WorkoutDto
 import java.util.Date
 import javax.persistence.*
 
@@ -18,6 +18,12 @@ class Workout (
     @Column
     val dateCreation: Date,
 
-    @OneToMany
+    @ManyToMany
     val exercises: MutableList<Exercise>? = null
+)
+fun Workout.toWorkoutDto() = WorkoutDto(
+        id = this.id!!,
+        name = this.name,
+        dateCreation = this.dateCreation.toString(),
+        exercises = this.exercises?.map { it.name }
 )
