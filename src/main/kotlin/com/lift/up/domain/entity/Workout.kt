@@ -19,11 +19,17 @@ class Workout (
     val dateCreation: Date,
 
     @ManyToMany
-    val exercises: MutableList<Exercise>? = null
+    val exercises: MutableList<Exercise>? = null,
+
+    @Column
+    val categories : String?
 )
 fun Workout.toWorkoutDto() = WorkoutDto(
         id = this.id!!,
         name = this.name,
         dateCreation = this.dateCreation.toString(),
-        exercises = this.exercises?.map { it.name }
+        exercises = this.exercises?.map { it.name },
+        categories = this.categories!!
+
+
 )

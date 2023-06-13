@@ -28,7 +28,8 @@ class WorkoutService(
         val workout = Workout(
             name = workoutCreateDto.name,
             dateCreation = Date(),
-            exercises = exercises)
+            exercises = exercises,
+                categories = workoutCreateDto.categories)
         workoutRepository.save(workout)
     }
 }
