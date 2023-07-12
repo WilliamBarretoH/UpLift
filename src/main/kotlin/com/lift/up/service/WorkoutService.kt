@@ -6,11 +6,13 @@ import com.lift.up.domain.entity.Workout
 import com.lift.up.domain.entity.toWorkoutDto
 import com.lift.up.domain.repository.ExerciseRepository
 import com.lift.up.domain.repository.WorkoutRepository
+import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
 import java.util.Date
 import java.util.stream.Collectors
 
 @Service
+@RequiredArgsConstructor
 class WorkoutService(
     private val workoutRepository: WorkoutRepository,
     private val exerciseRepository: ExerciseRepository
