@@ -24,14 +24,10 @@ class Exercise(
     @JoinColumn(name = "category_id")
     val category: Category,
 
-    @Column
-    val sets: Int? = null,
-
-    @Column
-    val reps: Float? = null
-)
-    fun Exercise.toExerciseDto() = ExerciseDto(
-            exerciseId = this.id,
-            name = this.name,
-            categoryName = this.category.name
     )
+
+fun Exercise.toExerciseDto() = ExerciseDto(
+    exerciseId = this.id,
+    name = this.name,
+    categoryName = this.category.name
+)
