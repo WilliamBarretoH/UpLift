@@ -25,13 +25,14 @@ class WorkoutService(
 
     fun createWorkout(workoutCreateDto: WorkoutCreateDto) {
         val exercises = workoutCreateDto.exercises.stream().map {
-            exerciseRepository.findById(it).orElseThrow()
+            exerciseRepository.findById(it).orElseThrow { throw NullPointerException() }
         }.collect(Collectors.toList())
+
         val workout = Workout(
             name = workoutCreateDto.name,
             dateCreation = Date(),
             exercises = exercises,
-                categories = workoutCreateDto.categories)
+            categories = workoutCreateDto.categories)
         workoutRepository.save(workout)
     }
 }

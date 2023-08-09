@@ -20,7 +20,7 @@ class Workout(
     val dateCreation: Date,
 
     @ManyToMany
-    val exercises: MutableList<Exercise>? = null,
+    val exercises: MutableList<Exercise>?,
 
     @Column
     val categories: String?,
