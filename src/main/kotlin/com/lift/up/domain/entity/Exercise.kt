@@ -24,10 +24,14 @@ class Exercise(
     @JoinColumn(name = "category_id")
     val category: Category,
 
+    @OneToMany
+    val sets: List<SetWork> = emptyList(),
+
     )
 
 fun Exercise.toExerciseDto() = ExerciseDto(
     exerciseId = this.id,
     name = this.name,
-    categoryName = this.category.name
+    categoryName = this.category.name,
+    sets = this.sets
 )

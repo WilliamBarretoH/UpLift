@@ -1,5 +1,6 @@
 package com.lift.up.domain.entity
 
+import com.lift.up.api.dto.ExerciseDto
 import com.lift.up.api.dto.WorkoutDto
 import java.util.*
 import javax.persistence.*
@@ -24,17 +25,13 @@ class Workout(
     @Column
     val categories: String?,
 
-    @OneToMany
-    val sets: List<SetWork> = emptyList(),
 )
 
 fun Workout.toWorkoutDto() = WorkoutDto(
     id = this.id!!,
     name = this.name,
     dateCreation = this.dateCreation.toString(),
-    exercises = this.exercises?.map { it.name },
-    categories = this.categories!!,
-    sets = this.sets
-
+    exercises = this.exercises?.map { ExerciseDto(name = it.name, sets = it.sets, categoryName = it.category.name, exerciseId = it.id) },
+    categories = this.categories!!
 
 )

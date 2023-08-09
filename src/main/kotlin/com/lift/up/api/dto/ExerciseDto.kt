@@ -7,4 +7,5 @@ data class ExerciseDto(
         val exerciseId: Long?,
         val name: String,
         val categoryName : String?,
+        val sets: List<SetWork> = emptyList()
 )

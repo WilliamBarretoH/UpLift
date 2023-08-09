@@ -6,7 +6,6 @@ data class WorkoutDto(
         val id: Long,
         val name: String,
         val dateCreation: String,
-        val exercises: List<String>?,
-        val categories: String,
-        val sets: List<SetWork>?
+        val exercises: List<ExerciseDto>?,
+        val categories: String
 )
