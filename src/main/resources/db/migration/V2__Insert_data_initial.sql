@@ -1,5 +1,3 @@
-CREATE SEQUENCE SQ_EXERCISE_ID  minvalue 1 increment by 1 start with 1 maxvalue 9999999999;
-CREATE SEQUENCE SQ_CATEGORY_ID  minvalue 1 increment by 1 start with 1 maxvalue 9999999999;
 
 
 INSERT INTO category (name) VALUES ('Peito');

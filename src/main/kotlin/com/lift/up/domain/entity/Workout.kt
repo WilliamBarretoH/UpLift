@@ -10,7 +10,7 @@ import javax.persistence.*
 class Workout(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @Column
@@ -25,13 +25,15 @@ class Workout(
     @Column
     val categories: String?,
 
-)
+) {
+    fun toWorkoutDto() = WorkoutDto(
+        id = this.id!!,
+        name = this.name,
+        dateCreation = this.dateCreation.toString(),
+        exercises = this.exercises?.map { ExerciseDto(name = it.name, sets = it.sets, categoryName = it.category.name, exerciseId = it.id) },
+        categories = this.categories!!
 
-fun Workout.toWorkoutDto() = WorkoutDto(
-    id = this.id!!,
-    name = this.name,
-    dateCreation = this.dateCreation.toString(),
-    exercises = this.exercises?.map { ExerciseDto(name = it.name, sets = it.sets, categoryName = it.category.name, exerciseId = it.id) },
-    categories = this.categories!!
+    )
+}
 
-)
+

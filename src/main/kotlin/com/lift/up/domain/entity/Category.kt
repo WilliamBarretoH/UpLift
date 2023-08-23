@@ -10,25 +10,21 @@ class Category(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(
-        name = "SQ_CATEGORY",
-        initialValue = 1,
-        allocationSize = 1,
-        sequenceName = "SQ_CATEGORY_ID"
-    )
     val id: Long,
 
     @Column
     val name: String,
 
     @OneToMany(mappedBy = "category")
-    val exercises : List<Exercise>,
+    val exercises: List<Exercise>,
 
-)
-fun Category.toCategoryDto() = CategoryDto(
+    ) {
+    fun toCategoryDto() = CategoryDto(
         categoryId = this.id,
         name = this.name,
         exercises = this.exercises.map {
             ExerciseCategoryListDto(it.id, it.name)
         }
-)
+    )
+}
+

@@ -1,7 +1,6 @@
 package com.lift.up.service
 
 import com.lift.up.api.dto.CategoryDto
-import com.lift.up.domain.entity.toCategoryDto
 import com.lift.up.domain.repository.CategoryRepository
 import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service

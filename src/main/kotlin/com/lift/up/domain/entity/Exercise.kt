@@ -9,12 +9,6 @@ class Exercise(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(
-        name = "SQ_EXERCISE",
-        initialValue = 1,
-        allocationSize = 1,
-        sequenceName = "SQ_EXERCISE_ID"
-    )
     val id: Long,
 
     @Column
@@ -26,12 +20,13 @@ class Exercise(
 
     @OneToMany
     val sets: List<SetWork> = emptyList(),
-
+) {
+    fun toExerciseDto() = ExerciseDto(
+        exerciseId = this.id,
+        name = this.name,
+        categoryName = this.category.name,
+        sets = this.sets
     )
+}
 
-fun Exercise.toExerciseDto() = ExerciseDto(
-    exerciseId = this.id,
-    name = this.name,
-    categoryName = this.category.name,
-    sets = this.sets
-)
+

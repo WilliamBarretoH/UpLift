@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "set_work")
 class SetWork(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @Enumerated(EnumType.STRING)

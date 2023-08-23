@@ -3,7 +3,6 @@ package com.lift.up.service
 import com.lift.up.api.dto.WorkoutCreateDto
 import com.lift.up.api.dto.WorkoutDto
 import com.lift.up.domain.entity.Workout
-import com.lift.up.domain.entity.toWorkoutDto
 import com.lift.up.domain.repository.ExerciseRepository
 import com.lift.up.domain.repository.WorkoutRepository
 import lombok.RequiredArgsConstructor
