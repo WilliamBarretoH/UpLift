@@ -1,12 +1,14 @@
 package com.lift.up.domain.entity
 
+import com.lift.up.domain.model.AuthProvider
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "users")
-class User : UserDetails {
+class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,20 +20,28 @@ class User : UserDetails {
     @Column(name = "full_name")
     var fullName: String? = null
 
+    @Column(name = "email")
+    var email: String = ""
+
+    @Column(name = "image_url")
+    var imageUrl: String? = ""
+
     @Column(name = "password")
-    private var password: String? = null
+    var password: String? = null
+        get() = field
+        set(value) { field = value }
 
-    @Column(name = "account_non_expired")
-    private var accountNonExpired: Boolean? = null
-
-    @Column(name = "account_non_locked")
-    private var accountNonLocked: Boolean? = null
-
-    @Column(name = "credential_non_expired")
-    private var credentialsNonExpired: Boolean? = null
-
-    @Column(name = "enabled")
-    private var enabled: Boolean? = null
+//    @Column(name = "account_non_expired")
+//    private var accountNonExpired: Boolean? = null
+//
+//    @Column(name = "account_non_locked")
+//    private var accountNonLocked: Boolean? = null
+//
+//    @Column(name = "credential_non_expired")
+//    private var credentialsNonExpired: Boolean? = null
+//
+//    @Column(name = "enabled")
+//    private var enabled: Boolean? = null
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -41,6 +51,11 @@ class User : UserDetails {
     )
     var permissions: List<Permission>? = null
 
+    @Enumerated(EnumType.STRING)
+    var provider: @NotNull AuthProvider? = null
+
+    var providerId: String? = null
+
     val role: List<String?>
         get() {
             val roles: MutableList<String?> = ArrayList()
@@ -49,32 +64,4 @@ class User : UserDetails {
             }
             return roles
         }
-
-    override fun getAuthorities(): Collection<GrantedAuthority> {
-        return permissions!!
-    }
-
-    override fun getPassword(): String {
-        return password!!
-    }
-
-    override fun getUsername(): String {
-        return userName!!
-    }
-
-    override fun isAccountNonExpired(): Boolean {
-        return accountNonExpired!!
-    }
-
-    override fun isAccountNonLocked(): Boolean {
-        return accountNonLocked!!
-    }
-
-    override fun isCredentialsNonExpired(): Boolean {
-        return credentialsNonExpired!!
-    }
-
-    override fun isEnabled(): Boolean {
-        return enabled!!
-    }
 }
