@@ -50,7 +50,7 @@ class AuthController(
             throw BadRequestException("Email address already in use.")
         }
 
-        // Creating user's account
+        // Criando usuario
         val user = User()
         user.fullName = (signUpRequest?.name)
         user.email = (signUpRequest?.email.toString())

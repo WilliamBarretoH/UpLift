@@ -15,6 +15,7 @@ import org.springframework.security.config.BeanIds
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -48,9 +49,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     /*
-      By default, Spring OAuth2 uses HttpSessionOAuth2AuthorizationRequestRepository to save
-      the authorization request. But, since our service is stateless, we can't save it in
-      the session. We'll save the request in a Base64 encoded cookie instead.
+
+      Por padrão, Spring OAuth2 usa HttpSessionOAuth2AuthorizationRequestRepository para salvar
+      o pedido de autorização. Mas, como nosso serviço não tem estado, não podemos salvá-lo em
+      a sessão. Em vez disso, salvaremos a solicitação em um cookie codificado em Base64
     */
     @Bean
     fun cookieAuthorizationRequestRepository(): HttpCookieOAuth2AuthorizationRequestRepository {
@@ -73,6 +75,18 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()
+    }
+
+    @Throws(Exception::class)
+    override fun configure(web: WebSecurity?) {
+        web?.ignoring()?.antMatchers(
+            "/v3/api-docs/**",
+            "/v3/api-docs/swagger-config",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**");
     }
 
     @Throws(Exception::class)
@@ -106,7 +120,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 "/**/*.js"
             )
             .permitAll()
-            .antMatchers("/auth/**", "/swagger-ui.html/**", "/oauth2/**")
+            .antMatchers("/auth/**", "/oauth2/**")
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -125,7 +139,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .successHandler(oAuth2AuthenticationSuccessHandler)
             .failureHandler(oAuth2AuthenticationFailureHandler)
 
-        // Add our custom Token based authentication filter
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }
 }
