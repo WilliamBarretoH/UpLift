@@ -1,3 +1,4 @@
 # UpLift- Projeto backend para registro de progressão de cargas
 
-![image](https://github.com/WilliamBarretoH/UpLift/assets/46332531/8b1f724e-6ad6-467b-a551-d3e0575fac69)
+![image](https://github.com/WilliamBarretoH/UpLift/assets/46332531/662c84fd-f1d8-4328-8097-e085dd1e6ff2)
+
